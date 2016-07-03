@@ -7,6 +7,9 @@
 //
 
 #import "FISTriviaTableViewController.h"
+#import "FISTrivium.h"
+#import "FISAddTriviaViewController.h"
+#import "FISTriviaDetailViewController.h"
 
 @interface FISTriviaTableViewController ()
 
@@ -19,14 +22,17 @@
     // set accessbility for tests be able to get access to TVC
     self.view.accessibilityIdentifier = @"Trivia Table";
     self.view.accessibilityLabel = @"Trivia Table";
+     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -36,58 +42,28 @@
     return [self.location.trivia count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"rightDetailCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    cell.textLabel.text = ((FISTrivium *)(self.location.trivia[indexPath.row])).content;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu",
+                                ((FISTrivium *)self.location.trivia[indexPath.row]).likes];
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"addTrivia"]) {
+        FISAddTriviaViewController *viewControllerAddTrivium = segue.destinationViewController;
+        viewControllerAddTrivium.location = self.location;
+    }
+    if ([segue.identifier isEqualToString:@"viewTrivia"]) {
+        NSUInteger indexSelectedTrivium = [self.tableView indexPathForSelectedRow].row;
+        FISTriviaDetailViewController *viewCotrollerTriviumDetail = segue.destinationViewController;
+        NSLog(@"BEFORE I GO TO DETAIL VIEW %@", ((FISTrivium *)(self.location.trivia[indexSelectedTrivium])).content);
+        viewCotrollerTriviumDetail.trivium = self.location.trivia[indexSelectedTrivium];
+    }
 }
-*/
 
 @end

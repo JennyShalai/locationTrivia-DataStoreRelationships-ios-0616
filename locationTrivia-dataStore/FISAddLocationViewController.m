@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *latitudeField;
 @property (weak, nonatomic) IBOutlet UITextField *longitudeField;
 @property (strong, nonatomic) FISLocationsDataStore *dataStore;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
 
 @end
@@ -24,24 +26,57 @@
 @implementation FISAddLocationViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
+    // set access for tests
+    self.nameField.accessibilityLabel = @"nameField";
+    self.nameField.accessibilityIdentifier = @"nameField";
+    self.latitudeField.accessibilityIdentifier = @"latitudeField";
+    self.latitudeField.accessibilityLabel = @"latitudeField";
+    self.longitudeField.accessibilityLabel = @"longitudeField";
+    self.longitudeField.accessibilityIdentifier = @"longitudeField";
+    self.submitButton.accessibilityIdentifier = @"saveButton";
+    self.submitButton.accessibilityLabel = @"saveButton";
+    self.cancelButton.accessibilityLabel = @"cancelButton";
+    self.cancelButton.accessibilityIdentifier = @"cancelButton";
+    
     self.dataStore = [FISLocationsDataStore sharedLocationsDataStore];
-    // Do any additional setup after loading the view.
+   
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)cancelButtonTapped:(id)sender {
+    // dismiss the view
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
-- (IBAction)addButtonTapped:(id)sender {
-    self.location = [[FISLocation alloc] initWithName:self.nameField.text
+- (IBAction)submitButtonTapped:(id)sender {
+    if ([self.nameField.text isEqualToString:@""] || [self.longitudeField.text isEqualToString:@""] || [self.latitudeField.text isEqualToString:@""]) {
+        if ([self.nameField.text isEqualToString:@""]) {
+            self.nameField.placeholder = @"PUT LOCATION NAME";
+        }
+        if ([self.longitudeField.text isEqualToString:@""]) {
+            self.longitudeField.placeholder = @"PUT LONGITUDE";
+        }
+        if ([self.latitudeField.text isEqualToString:@""]) {
+            self.latitudeField.placeholder = @"PUT LATITUDE";
+        }
+        
+    } else {
+        self.location = [[FISLocation alloc] initWithName:self.nameField.text
                                              latitude:[self.latitudeField.text floatValue]
                                             longitude:[self.longitudeField.text floatValue]];
-    [self.dataStore.locations addObject:self.location];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+        // add new location to database
+        [self.dataStore.locations addObject:self.location];
+        // dismiss the view
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
+
 
 
 @end

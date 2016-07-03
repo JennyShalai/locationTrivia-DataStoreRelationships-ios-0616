@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Unc-ws-IkJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Unc-ws-IkJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -18,11 +18,11 @@
                                 <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vY7-nE-CBe" id="YBF-Jg-9zi">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kxv-RZ-k1p">
-                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -31,7 +31,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="4Gq-Cf-ALh" kind="show" id="oiG-Vv-K6b"/>
+                                    <segue destination="4Gq-Cf-ALh" kind="show" identifier="trivia" id="nMG-PQ-s9U"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -44,11 +44,14 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="2rS-jW-MIf">
                             <connections>
                                 <action selector="addButtonTapped:" destination="RHv-2l-BWA" id="1AF-oE-ahH"/>
-                                <segue destination="y4y-vU-ezV" kind="presentation" id="pNP-Jc-SG0"/>
+                                <segue destination="y4y-vU-ezV" kind="presentation" identifier="trivia" id="pNP-Jc-SG0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="addButton" destination="2rS-jW-MIf" id="23b-e7-ge5"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jap-Su-mzH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -88,10 +91,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9f-Ya-Iio">
-                                <rect key="frame" x="117" y="353" width="86" height="30"/>
+                                <rect key="frame" x="191" y="410" width="86" height="30"/>
                                 <state key="normal" title="Add location"/>
                                 <connections>
-                                    <action selector="addButtonTapped:" destination="y4y-vU-ezV" eventType="touchUpInside" id="3jG-1H-JIm"/>
+                                    <action selector="submitButtonTapped:" destination="y4y-vU-ezV" eventType="touchUpInside" id="eNF-ZY-mgk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36h-8P-6UC">
+                                <rect key="frame" x="41" y="410" width="86" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="y4y-vU-ezV" eventType="touchUpInside" id="XoM-eT-KnZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -99,9 +109,11 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="cancelButton" destination="36h-8P-6UC" id="LDR-JW-UrQ"/>
                         <outlet property="latitudeField" destination="BeA-le-WxZ" id="CdE-vx-EEN"/>
                         <outlet property="longitudeField" destination="s2b-05-9lR" id="8TF-Km-s2I"/>
                         <outlet property="nameField" destination="IgR-cy-c6C" id="550-Jd-hxa"/>
+                        <outlet property="submitButton" destination="M9f-Ya-Iio" id="cDv-qd-JrF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E5f-15-3RK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -121,18 +133,18 @@
                                 <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bG2-3X-G4r" id="BLW-GX-Cdm">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ozK-9a-YSg">
-                                            <rect key="frame" x="15" y="12" width="32" height="20"/>
+                                            <rect key="frame" x="15" y="12" width="31.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a0f-CV-uwe">
-                                            <rect key="frame" x="263" y="12" width="42" height="20"/>
+                                            <rect key="frame" x="263.5" y="12" width="41.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -140,18 +152,102 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="4zW-oB-XPm" kind="show" identifier="viewTrivia" id="vGP-sf-P6d"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="4Gq-Cf-ALh" id="Hjr-gR-cOw"/>
-                            <outlet property="delegate" destination="4Gq-Cf-ALh" id="ZZx-Ib-rLY"/>
-                        </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="h7p-cC-XIr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="aXg-mT-upT">
+                            <connections>
+                                <segue destination="LJS-Z0-0GC" kind="presentation" identifier="addTrivia" id="u16-JH-BpU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CbW-Z8-Mzv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1597" y="725"/>
+            <point key="canvasLocation" x="1597" y="760"/>
+        </scene>
+        <!--Add Trivia View Controller-->
+        <scene sceneID="DlV-fh-mpp">
+            <objects>
+                <viewController id="LJS-Z0-0GC" customClass="FISAddTriviaViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Twv-UW-UaZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jfi-6b-PVq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Ak-Oy-W1k">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUm-o6-tjt">
+                                <rect key="frame" x="199" y="274" width="64" height="30"/>
+                                <state key="normal" title="add trivia"/>
+                                <connections>
+                                    <action selector="submitButtonTapped:" destination="LJS-Z0-0GC" eventType="touchUpInside" id="ihs-kd-Y0H"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pli-gX-xA0">
+                                <rect key="frame" x="54" y="274" width="45" height="30"/>
+                                <state key="normal" title="cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="LJS-Z0-0GC" eventType="touchUpInside" id="fe7-gp-u4z"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="content" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b4A-20-y6g">
+                                <rect key="frame" x="54" y="172" width="209" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="pli-gX-xA0" id="ESB-F3-vyg"/>
+                        <outlet property="submitButton" destination="BUm-o6-tjt" id="Lee-RI-Tap"/>
+                        <outlet property="triviaTextField" destination="b4A-20-y6g" id="Hey-7v-03n"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="219-5A-Ko1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2030" y="404"/>
+        </scene>
+        <!--Trivia Detail View Controller-->
+        <scene sceneID="h0h-AU-Hg8">
+            <objects>
+                <viewController id="4zW-oB-XPm" customClass="FISTriviaDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EdB-zb-jD0"/>
+                        <viewControllerLayoutGuide type="bottom" id="swq-yL-kLz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0b8-sP-koU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qbg-j5-o9S">
+                                <rect key="frame" x="40" y="105" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="triviumDetailText" destination="qbg-j5-o9S" id="Ebg-fj-RTQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OdV-V2-DL2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2030" y="1047"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fiG-Bk-nF3">

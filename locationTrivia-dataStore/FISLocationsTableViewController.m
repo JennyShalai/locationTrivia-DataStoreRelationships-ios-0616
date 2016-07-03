@@ -9,10 +9,12 @@
 #import "FISLocationsTableViewController.h"
 #import "FISLocation.h"
 #import "FISLocationsDataStore.h"
+#import "FISTriviaTableViewController.h"
 
 @interface FISLocationsTableViewController ()
 
 @property (strong, nonatomic) FISLocationsDataStore *locationsStore;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 
 @end
 
@@ -23,34 +25,17 @@
     // set accessibility for tests able to access TVC
     self.tableView.accessibilityLabel = @"Locations Table";
     self.tableView.accessibilityIdentifier = @"Locations Table";
-    
-    
-    FISLocation *statueOfLibert = [[FISLocation alloc] init];
-    statueOfLibert.latitude = 40;
-    statueOfLibert.longitude = -74;
-    statueOfLibert.name = @"State of Liberty";
-    
-    
-    // alloc and init new element in DataStore
-    self.locationsStore = [[FISLocationsDataStore sharedLocationsDataStore] initWithLocations:@[statueOfLibert]];
-    
-    
-    
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.addButton.accessibilityIdentifier = @"addButton";
+    self.addButton.accessibilityLabel = @"addButton";
+    // fill in some data
+    self.locationsStore = [[FISLocationsDataStore sharedLocationsDataStore]
+                           initWithLocations:[self generateStartingLocationsData]];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -60,14 +45,9 @@
     return [self.locationsStore.locations count];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"basicCell" forIndexPath:indexPath];
-    
-    FISLocation *location = self.locationsStore.locations[indexPath.row];
-    
-    cell.textLabel.text = location.name;
-    
+    cell.textLabel.text = ((FISLocation *)self.locationsStore.locations[indexPath.row]).name;
     return cell;
 }
 
@@ -76,6 +56,7 @@
     [super viewWillAppear:animated];
     [self.tableView reloadData];
 }
+
 - (IBAction)addButtonTapped:(id)sender {
 
     
@@ -83,52 +64,43 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
+    if ([segue.identifier isEqualToString:@"trivia"]) {
+        
+        NSUInteger indexSelectedRow = [self.tableView indexPathForSelectedRow].row;
+        
+        FISTriviaTableViewController *viewControllerToTrivia = segue.destinationViewController;
+        
+        viewControllerToTrivia.location = self.locationsStore.locations[indexSelectedRow];
+    }
 
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (NSArray *)generateStartingLocationsData {
+    // bowlingGreen
+    FISLocation *empireState = [[FISLocation alloc] initWithName:@"The Empire State Building"
+                                                        latitude:40.7484
+                                                       longitude:-73.9857];
+    FISTrivium *trivium1A = [[FISTrivium alloc] initWithContent:@"1,454 Feet Tall" likes:4];
+    FISTrivium *trivium1B = [[FISTrivium alloc] initWithContent:@"Cost $24,718,000 to build" likes:2];
+    [empireState.trivia addObjectsFromArray:@[trivium1A, trivium1B]];
+    
+    // empireState
+    FISLocation *bowlingGreen = [[FISLocation alloc] initWithName:@"Bowling Green"
+                                                         latitude:41.3739
+                                                        longitude:-83.6508];
+    FISTrivium *trivium2A = [[FISTrivium alloc] initWithContent:@"NYC's oldest park" likes:8];
+    FISTrivium *trivium2B = [[FISTrivium alloc] initWithContent:@"Made a park in 1733" likes:2];
+    FISTrivium *trivium2C = [[FISTrivium alloc] initWithContent:@"Charging Bull was created in 1989" likes:0];
+    [bowlingGreen.trivia addObjectsFromArray:@[trivium2A, trivium2B, trivium2C]];
+    
+    // ladyLiberty
+    FISLocation *ladyLiberty = [[FISLocation alloc] initWithName:@"Statue Of Liberty"
+                                                        latitude:40.6892
+                                                       longitude:74.0444];
+    FISTrivium *trivium3A = [[FISTrivium alloc] initWithContent:@"Gift from the french" likes:6];
+    [ladyLiberty.trivia addObjectsFromArray:@[trivium3A]];
+    
+    return @[bowlingGreen, empireState, ladyLiberty];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
