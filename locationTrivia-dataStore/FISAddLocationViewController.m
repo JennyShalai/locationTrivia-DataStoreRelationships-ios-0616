@@ -55,18 +55,18 @@
 }
 
 - (IBAction)submitButtonTapped:(id)sender {
-    if ([self.nameField.text isEqualToString:@""] || [self.longitudeField.text isEqualToString:@""] || [self.latitudeField.text isEqualToString:@""]) {
-        if ([self.nameField.text isEqualToString:@""]) {
-            self.nameField.placeholder = @"PUT LOCATION NAME";
-        }
-        if ([self.longitudeField.text isEqualToString:@""]) {
-            self.longitudeField.placeholder = @"PUT LONGITUDE";
-        }
-        if ([self.latitudeField.text isEqualToString:@""]) {
-            self.latitudeField.placeholder = @"PUT LATITUDE";
-        }
-        
-    } else {
+//    if ([self.nameField.text isEqualToString:@""] || [self.longitudeField.text isEqualToString:@""] || [self.latitudeField.text isEqualToString:@""]) {
+//        if ([self.nameField.text isEqualToString:@""]) {
+//            self.nameField.placeholder = @"PUT LOCATION NAME";
+//        }
+//        if ([self.longitudeField.text isEqualToString:@""]) {
+//            self.longitudeField.placeholder = @"PUT LONGITUDE";
+//        }
+//        if ([self.latitudeField.text isEqualToString:@""]) {
+//            self.latitudeField.placeholder = @"PUT LATITUDE";
+//        }
+//        
+//    } else {
         self.location = [[FISLocation alloc] initWithName:self.nameField.text
                                              latitude:[self.latitudeField.text floatValue]
                                             longitude:[self.longitudeField.text floatValue]];
@@ -74,7 +74,7 @@
         [self.dataStore.locations addObject:self.location];
         // dismiss the view
         [self dismissViewControllerAnimated:YES completion:nil];
-    }
+//    }
 }
 
 

@@ -13,6 +13,9 @@
 
 @interface FISTriviaTableViewController ()
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addTriviaButton;
+
+
 @end
 
 @implementation FISTriviaTableViewController
@@ -22,6 +25,8 @@
     // set accessbility for tests be able to get access to TVC
     self.view.accessibilityIdentifier = @"Trivia Table";
     self.view.accessibilityLabel = @"Trivia Table";
+    self.addTriviaButton.accessibilityLabel = @"Add Trivia Button";
+    
      
 }
 
@@ -61,7 +66,6 @@
     if ([segue.identifier isEqualToString:@"viewTrivia"]) {
         NSUInteger indexSelectedTrivium = [self.tableView indexPathForSelectedRow].row;
         FISTriviaDetailViewController *viewCotrollerTriviumDetail = segue.destinationViewController;
-        NSLog(@"BEFORE I GO TO DETAIL VIEW %@", ((FISTrivium *)(self.location.trivia[indexSelectedTrivium])).content);
         viewCotrollerTriviumDetail.trivium = self.location.trivia[indexSelectedTrivium];
     }
 }

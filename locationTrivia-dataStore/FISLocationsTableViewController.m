@@ -48,6 +48,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"basicCell" forIndexPath:indexPath];
     cell.textLabel.text = ((FISLocation *)self.locationsStore.locations[indexPath.row]).name;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu",((FISLocation *)self.locationsStore.locations[indexPath.row]).trivia.count];
     return cell;
 }
 

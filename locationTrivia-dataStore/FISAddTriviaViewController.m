@@ -27,8 +27,8 @@
     [super viewDidLoad];
     
     // set tests access
-    self.triviaTextField.accessibilityLabel = @"Trivium Text Field";
-    self.triviaTextField.accessibilityIdentifier = @"Trivium Text Field";
+    self.triviaTextField.accessibilityLabel = @"Trivium TextField";
+    self.triviaTextField.accessibilityIdentifier = @"Trivium TextField";
     self.cancelButton.accessibilityIdentifier = @"Cancel Button";
     self.cancelButton.accessibilityLabel = @"Cancel Button";
     self.submitButton.accessibilityLabel = @"Save Button";
@@ -45,15 +45,15 @@
 }
 
 - (IBAction)submitButtonTapped:(id)sender {
-    if ([self.triviaTextField.text isEqualToString:@""]) {
-        self.triviaTextField.placeholder = @"PUT TRIVIUM CONTENT";
-    } else {
+//    if ([self.triviaTextField.text isEqualToString:@""]) {
+//        self.triviaTextField.placeholder = @"PUT TRIVIUM CONTENT";
+//    } else {
         self.trivium = [[FISTrivium alloc] initWithContent:self.triviaTextField.text likes:0];
         // add new trivium in database
         [self.location.trivia addObject:self.trivium];
         //dismiss view
         [self dismissViewControllerAnimated:YES completion:nil];
-    }
+//    }
 }
 
 
